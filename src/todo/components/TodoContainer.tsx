@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTodos } from "../api/actions/getTodos";
-
-export interface Todo {
-  title: string;
-  task: string;
-  createdAt: Date;
-  completed: boolean;
-  id: string;
-  user: string;
-}
+import type { Todo } from "../interfaces/todo.interface";
 
 export function TodoContainer() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -26,7 +18,7 @@ export function TodoContainer() {
   };
 
   return (
-    <section className="bg-linear-60 from-blue-300 to-sky-100 text-black p-4 w-full h-screen flex flex-col ">
+    <section className="bg-linear-60 from-blue-300 to-sky-100 text-black p-4 w-full min-h-screen flex flex-col ">
       <button
         onClick={handleCreateNewTodo}
         className="bg-sky-400 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded sm:w-fit mx-auto active:scale-95 transition-transform duration-200"
@@ -34,11 +26,11 @@ export function TodoContainer() {
         Create New Todo
       </button>
 
-      <div className="flex flex-col gap-4 mt-4">
+      <div className="flex flex-col-reverse gap-4 mt-4">
         {todos.map((todo) => (
           <div
             key={todo.id}
-            className="bg-white p-4 rounded shadow border border-gray-200 sm:w-1/2 lg:w-1/3 mx-auto hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+            className="bg-white p-4 rounded shadow border border-gray-200 w-[90%] sm:w-1/2 lg:w-1/3 mx-auto hover:shadow-lg transition-shadow duration-300 cursor-pointer"
           >
             <h2 className="text-xl font-bold">{todo.title}</h2>
             <p className="text-gray-600">{todo.task}</p>
