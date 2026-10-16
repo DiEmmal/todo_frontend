@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTodos } from "../api/actions/getTodos";
-import type { Todo } from "../interfaces/todo.interface";
+import type { Todo } from "../api/interfaces/todo.interface";
 import { CreateTodo } from "./CreateTodo";
 
 export function TodoContainer() {
@@ -11,7 +11,7 @@ export function TodoContainer() {
     getTodos().then((data) => {
       setTodos(data);
     });
-  }, [todos.length]);
+  }, []);
 
   const handleCreateNewTodo = () => {
     setIsCreating((prev) => !prev);
@@ -26,7 +26,13 @@ export function TodoContainer() {
         {isCreating ? "Cancel" : "Create New Todo"}
       </button>
 
-      {isCreating && CreateTodo({ setIsCreating })}
+      {isCreating && (
+        <CreateTodo
+          setIsCreating={setIsCreating}
+          getTodos={getTodos}
+          setTodos={setTodos}
+        />
+      )}
 
       <div className="flex flex-col-reverse gap-4 mt-4">
         {todos.map((todo) => (
