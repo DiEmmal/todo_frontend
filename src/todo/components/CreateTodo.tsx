@@ -26,7 +26,7 @@ export function CreateTodo({
       getTodos().then((data) => {
         setTodos(data);
       });
-    }, 1500);
+    }, 350);
 
     setTitle("");
     setTask("");

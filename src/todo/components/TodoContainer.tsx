@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getTodos } from "../api/actions/getTodos";
 import type { Todo } from "../api/interfaces/todo.interface";
 import { CreateTodo } from "./CreateTodo";
+import { TodoComponent } from "./Todo";
 
 export function TodoContainer() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -36,17 +37,7 @@ export function TodoContainer() {
 
       <div className="flex flex-col-reverse gap-4 mt-4">
         {todos.map((todo) => (
-          <div
-            key={todo.id}
-            className="bg-white p-4 rounded shadow border border-gray-200 w-[90%] sm:w-1/2 lg:w-1/3 mx-auto hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-          >
-            <h2 className="text-xl font-bold">{todo.title}</h2>
-            <p className="text-gray-600">{todo.task}</p>
-            <p className="text-sm text-gray-500">
-              Created: {todo.createdAt.toLocaleDateString()}
-            </p>
-            <p className="text-sm text-gray-500 text-right">@{todo.user}</p>
-          </div>
+          <TodoComponent todo={todo} />
         ))}
       </div>
     </section>
