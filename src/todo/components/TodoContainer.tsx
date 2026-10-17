@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getTodos } from "../api/actions/getTodos";
-import type { Todo } from "../api/interfaces/todo.interface";
+import { getTodos } from "../actions/getTodos";
+import type { Todo } from "../interfaces/todo.interface";
 import { CreateTodo } from "./CreateTodo";
 import { TodoComponent } from "./Todo";
 

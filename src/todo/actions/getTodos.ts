@@ -1,5 +1,5 @@
-import axios from "axios"
 import type { Todo } from "../interfaces/todo.interface";
+import { apiUrl } from "../api/api-url";
 
 interface TodoAPIResponse {
     todos: Todo[];
@@ -7,7 +7,7 @@ interface TodoAPIResponse {
 
 export const getTodos = async (): Promise<Todo[]> => {
 
-    const response = await axios.get<TodoAPIResponse>("https://todo-database-c5bde7a12cfd.herokuapp.com" + "/api/todos");
+    const response = await apiUrl.get<TodoAPIResponse>("/api/todos");
 
     return response.data.todos.map(
         todo => ({

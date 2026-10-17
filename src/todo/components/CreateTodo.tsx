@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createTodo } from "../api/actions/createTodo";
-import type { Todo } from "../api/interfaces/todo.interface";
+import { createTodo } from "../actions/createTodo";
+import type { Todo } from "../interfaces/todo.interface";
 
 interface CreateTodoProps {
   setIsCreating: (isCreating: boolean) => void;
