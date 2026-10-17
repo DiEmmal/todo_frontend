@@ -37,7 +37,7 @@ export function TodoContainer() {
 
       <div className="flex flex-col-reverse gap-4 mt-4">
         {todos.map((todo) => (
-          <TodoComponent todo={todo} />
+          <TodoComponent key={todo.id} todo={todo} />
         ))}
       </div>
     </section>

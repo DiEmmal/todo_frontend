@@ -10,7 +10,6 @@ export function TodoComponent({ todo }: { todo: Todo }) {
 
   return (
     <div
-      key={todo.id}
       className="relative bg-white p-4 rounded shadow border border-gray-200 w-[90%] sm:w-1/2 lg:w-1/3 mx-auto hover:shadow-lg transition-shadow duration-300 cursor-pointer"
     >
       <button
