@@ -14,7 +14,7 @@ export function TodoComponent({ todo }: { todo: Todo }) {
     >
       <button
         onClick={handleDeleteTodo}
-        className="absolute top-2 right-2 text-red-700 px-1 rounded-lg hover:bg-red-400"
+        className="absolute top-2 right-2 text-red-700 px-1 rounded-lg hover:underline"
       >
         Delete
       </button>

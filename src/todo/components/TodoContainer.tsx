@@ -35,10 +35,19 @@ export function TodoContainer() {
         />
       )}
 
-      <div className="flex flex-col-reverse gap-4 mt-4">
-        {todos.map((todo) => (
-          <TodoComponent key={todo.id} todo={todo} />
-        ))}
+      <div className={`flex flex-col-reverse gap-4 mt-4`}>
+        {
+          todos.length > 0 ? (
+            todos.map((todo) => (
+              <TodoComponent
+                key={todo.id}
+                todo={todo}  
+              />
+            ))
+          ) : (
+            <TodoComponent key="no-todos" todo={{ id: "0", title: "No todos found", task: "Be the first in write a TODO", user: "System", completed: false, createdAt: new Date() }} />
+          )
+        }
       </div>
     </section>
   );
