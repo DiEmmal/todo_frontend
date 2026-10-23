@@ -8,6 +8,7 @@ export const editTodo = async (data: EditTodo): Promise<Todo | undefined> => {
         const response = await apiUrl.put(`/api/todos/${data.id}`, data);
 
         return {
+            hasBeenEdited: response.data.hasBeenEdited,
             title: response.data.title,
             task: response.data.task,
             createdAt: new Date(response.data.createdAt),
