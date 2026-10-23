@@ -60,19 +60,25 @@ export function TodoComponent({ todo }: { todo: Todo }) {
       </button>
       {isEditing ? (
         <div className="mt-4">
-          <label>Title: <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border border-gray-300 rounded p-2 mt-2"
-          /></label>
+          <label>
+            Title:{" "}
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="border border-gray-300 rounded p-2 mt-2"
+            />
+          </label>
           <br />
-          <label>Task: <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            className="border border-gray-300 rounded p-2 mt-2"
-          /></label>
+          <label>
+            Task:{" "}
+            <input
+              type="text"
+              value={task}
+              onChange={(e) => setTask(e.target.value)}
+              className="border border-gray-300 rounded p-2 mt-2"
+            />
+          </label>
         </div>
       ) : (
         <div>
@@ -83,7 +89,13 @@ export function TodoComponent({ todo }: { todo: Todo }) {
       <p className="text-sm text-gray-500">
         Created: {todo.createdAt.toLocaleDateString()}
       </p>
-      <p className="text-sm text-gray-500 text-right">@{todo.user}</p>
+      {todo.hasBeenEdited ? (
+        <div className="flex justify-between items-center">
+          <p className="inline text-gray-500">Edited</p>
+          <p className="inline text-gray-500">{`@${todo.user}`}</p>
+        </div>
+      ) : <p className="text-gray-500 text-right ">{`@${todo.user}`}</p>
+      }
     </div>
   );
 }

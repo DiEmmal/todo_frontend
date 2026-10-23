@@ -16,7 +16,8 @@ export const getTodos = async (): Promise<Todo[]> => {
             createdAt: new Date(todo.createdAt),
             completed: todo.completed,
             id: todo.id,
-            user: todo.user
+            user: todo.user,
+            hasBeenEdited: todo.hasBeenEdited
         })
     );
 

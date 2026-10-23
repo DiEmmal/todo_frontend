@@ -5,4 +5,5 @@ export interface Todo {
   completed: boolean;
   id: string;
   user: string;
+  hasBeenEdited: boolean;
 }
