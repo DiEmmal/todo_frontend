@@ -1,24 +1,35 @@
 import type { Todo } from "../interfaces/todo.interface";
 import { apiUrl } from "../api/api-url";
 
-interface TodoAPIResponse {
+export interface TodoAPIResponse {
+    pagination: Pagination;
     todos: Todo[];
 }
 
-export const getTodos = async (): Promise<Todo[]> => {
+interface Pagination {
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    limit: number;
+    nextPage: string | null;
+    prevPage: string | null;
+    total: number;
+    totalPages: number;
+}
 
-    const response = await apiUrl.get<TodoAPIResponse>("/api/todos");
+export const getTodos = async (page: number, limit?: number): Promise<TodoAPIResponse> => {
 
-    return response.data.todos.map(
-        todo => ({
-            title: todo.title,
-            task: todo.task,
+    const response = await apiUrl.get<TodoAPIResponse>("/api/todos", {
+        params: {
+            page: page,
+            limit: limit ?? 10,
+        }
+    });
+
+    return {
+        pagination: response.data.pagination,
+        todos: response.data.todos.map(todo => ({
+            ...todo,
             createdAt: new Date(todo.createdAt),
-            completed: todo.completed,
-            id: todo.id,
-            user: todo.user,
-            hasBeenEdited: todo.hasBeenEdited
-        })
-    );
-
+        })),
+    };
 }

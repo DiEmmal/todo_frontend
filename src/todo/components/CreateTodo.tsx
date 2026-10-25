@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { createTodo } from "../actions/createTodo";
 import type { Todo } from "../interfaces/todo.interface";
+import type { TodoAPIResponse } from "../actions/getTodos";
 
 interface CreateTodoProps {
   setIsCreating: (isCreating: boolean) => void;
-  getTodos: () => Promise<Todo[]>;
+  getTodos: () => Promise<TodoAPIResponse>;
   setTodos: (todos: Todo[]) => void;
 }
 
@@ -24,7 +25,7 @@ export function CreateTodo({
 
     setTimeout(() => {
       getTodos().then((data) => {
-        setTodos(data);
+        setTodos(data.todos);
       });
     }, 350);
 
