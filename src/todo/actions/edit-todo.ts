@@ -7,6 +7,8 @@ export const editTodo = async (data: EditTodo): Promise<Todo | undefined> => {
     try {
         const response = await apiUrl.put(`/api/todos/${data.id}`, data);
 
+        if(response.data.error) throw new Error(response.data.error);
+
         return {
             hasBeenEdited: response.data.hasBeenEdited,
             title: response.data.title,

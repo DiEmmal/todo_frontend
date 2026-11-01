@@ -10,13 +10,21 @@ export function TodoContainer() {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [limit, setLimit] = useState<number>();
+  const [totalTodos, setTotalTodos] = useState<number>(0);
 
-  useEffect(() => {
+  const handleFetchTodos = () => {
+
     getTodos(page).then((data) => {
       setTodos(data.todos);
       setTotalPages(data.pagination.totalPages);
       setLimit(data.pagination.limit)
+      setTotalTodos(data.pagination.total);
     });
+
+  }
+
+  useEffect(() => {
+    handleFetchTodos();
   }, []);
 
   const handlePrevPageClick = () => {
@@ -86,6 +94,7 @@ export function TodoContainer() {
             <span>Total pages: {totalPages}</span>
             <span>Limit: {limit}</span>
             <span>Current page: {page}</span>
+            <span>Total todos: {totalTodos}</span>
           </div>
           <span className="cursor-pointer" onClick={handleNextPageClick}>
             Next Page

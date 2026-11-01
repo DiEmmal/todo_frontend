@@ -38,7 +38,9 @@ export function TodoComponent({ todo }: { todo: Todo }) {
     }
 
     editTodo({ id: todo.id, title, task, completed: todo.completed }).then(
-      () => {},
+      () => {
+        window.location.reload();
+      },
     );
 
     setIsEditing(false);
