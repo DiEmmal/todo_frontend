@@ -51,7 +51,9 @@ export function TodoComponent({ todo }: TodoComponentProps) {
     }
 
     editTodo({ id: todo.id, title, task, completed: todo.completed }).then(
-      () => {},
+      () => {
+        window.location.reload();
+      },
     );
 
     setIsEditing(false);
