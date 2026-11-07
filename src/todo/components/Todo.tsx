@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useOptimistic, useState, useTransition } from "react";
 import { deleteTodo } from "../actions/deleteTodo";
 import type { Todo } from "../interfaces/todo.interface";
 import { editTodo } from "../actions/edit-todo";
 
-export function TodoComponent({ todo }: { todo: Todo }) {
+interface TodoComponentProps {
+  todo: Todo;
+  optimisticUpdate?: boolean;
+}
+
+export function TodoComponent({ todo }: TodoComponentProps) {
+  const [isPending, startTransition] = useTransition();
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const [title, setTitle] = useState<string>(todo.title);
   const [task, setTask] = useState<string>(todo.task);
+
+  const [optimisticTodo, setOptimisticTodo] = useOptimistic(
+    { ...todo, isSaving: false },
+    (current, newValues: { title?: string; task?: string }) => {
+      return { ...current, ...newValues, isSaving: true };
+    },
+  );
 
   //TODO: Implement completed state functionality
   // const [completed, setCompleted] = useState<boolean>(todo.completed);
@@ -44,17 +57,24 @@ export function TodoComponent({ todo }: { todo: Todo }) {
     );
 
     setIsEditing(false);
+
+    startTransition(async () => {
+      setOptimisticTodo({ title, task });
+      await editTodo({ id: todo.id, title, task, completed: todo.completed });
+    });
   };
 
   return (
     <div className="relative bg-white p-4 rounded shadow border border-gray-200 w-[90%] sm:w-1/2 lg:w-1/3 mx-auto hover:shadow-lg transition-shadow duration-300">
       <button
+        disabled={isPending}
         onClick={isEditing ? handleCancelEdit : handleDeleteTodo}
         className="absolute top-2 right-2 text-red-700 px-1 rounded-lg hover:underline cursor-pointer"
       >
         {isEditing ? "Cancel" : "Delete"}
       </button>
       <button
+        disabled={isPending}
         onClick={isEditing ? handleSaveEdit : handleEditTodo}
         className="absolute top-2 right-16 text-blue-700 px-1 rounded-lg hover:underline cursor-pointer"
       >
@@ -84,8 +104,15 @@ export function TodoComponent({ todo }: { todo: Todo }) {
         </div>
       ) : (
         <div>
-          <h2 className="text-xl font-bold">{todo.title}</h2>
-          <p className="text-gray-600">{todo.task}</p>
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            {optimisticTodo.title}
+            {optimisticTodo.isSaving && (
+              <span className="text-xs text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full animate-pulse">
+                Saving...
+              </span>
+            )}
+          </h2>
+          <p className="text-gray-600">{optimisticTodo.task}</p>
         </div>
       )}
       <p className="text-sm text-gray-500">
@@ -96,8 +123,9 @@ export function TodoComponent({ todo }: { todo: Todo }) {
           <p className="inline text-gray-500">Edited</p>
           <p className="inline text-gray-500">{`@${todo.user}`}</p>
         </div>
-      ) : <p className="text-gray-500 text-right ">{`@${todo.user}`}</p>
-      }
+      ) : (
+        <p className="text-gray-500 text-right ">{`@${todo.user}`}</p>
+      )}
     </div>
   );
 }
