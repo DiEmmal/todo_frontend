@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+body {
+    @apply bg-linear-60 from-blue-300 to-sky-100;
+}

@@ -54,7 +54,7 @@ export function TodoContainer() {
   };
 
   return (
-    <section className="bg-linear-60 from-blue-300 to-sky-100 text-black p-4 w-full min-h-screen flex flex-col ">
+    <section className=" text-black p-4 w-full min-h-screen flex flex-col ">
       <button
         onClick={handleCreateNewTodo}
         className="bg-sky-400 hover:bg-sky-500 text-white font-bold py-2 px-4 rounded mx-auto active:scale-95 transition-transform duration-200 w-2/3 sm:w-1/4 lg:w-48 text-center"
