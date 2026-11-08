@@ -26,6 +26,12 @@ export function TodoComponent({ todo }: TodoComponentProps) {
   // const [completed, setCompleted] = useState<boolean>(todo.completed);
 
   const handleDeleteTodo = () => {
+
+    if(localStorage.getItem('username') !== todo.user) {
+      alert("You can't delete someone else's todo.");
+      return;
+    }
+
     deleteTodo(todo.id).then(() => {
       window.location.reload();
     });
@@ -40,6 +46,12 @@ export function TodoComponent({ todo }: TodoComponentProps) {
   };
 
   const handleSaveEdit = () => {
+    if(localStorage.getItem('username') !== todo.user) {
+      alert("You can't edit someone else's todo.");
+      setIsEditing(false);
+      return;
+    }
+
     if (title.trim() === "" || task.trim() === "") {
       alert("Title and task cannot be empty.");
       return;
@@ -49,12 +61,6 @@ export function TodoComponent({ todo }: TodoComponentProps) {
       alert("No changes made.");
       return;
     }
-
-    editTodo({ id: todo.id, title, task, completed: todo.completed }).then(
-      () => {
-        window.location.reload();
-      },
-    );
 
     setIsEditing(false);
 
