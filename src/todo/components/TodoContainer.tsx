@@ -50,6 +50,11 @@ export function TodoContainer() {
   };
 
   const handleCreateNewTodo = () => {
+    if(!localStorage.getItem('username')) {
+      alert("Please login first to create a new todo.");
+      return;
+    }
+
     setIsCreating((prev) => !prev);
   };
 

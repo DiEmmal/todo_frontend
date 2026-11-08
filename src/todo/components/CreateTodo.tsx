@@ -60,14 +60,7 @@ export function CreateTodo({
       </label>
       <label>
         User:{" "}
-        <input
-          required
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
-          type="text"
-          className="bg-sky-200 border border-sky-700 p-2 rounded-xl active:scale-95 transition-transform duration-200"
-          placeholder="Enter user"
-        />
+        <span> {localStorage.getItem('username')} </span>
       </label>
       <button
         className="bg-red-300 border border-red-800 text-red-800 w-1/3 sm:w-1/4 lg:w-1/5 rounded"
