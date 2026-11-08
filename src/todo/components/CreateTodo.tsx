@@ -16,7 +16,7 @@ export function CreateTodo({
 }: CreateTodoProps) {
   const [title, setTitle] = useState<string>("");
   const [task, setTask] = useState<string>("");
-  const [user, setUser] = useState<string>("");
+  const user = localStorage.getItem("username") || "";
 
   const handleCreateTodo = () => {
     createTodo({ title, task, user }).then(() => {
@@ -31,7 +31,6 @@ export function CreateTodo({
 
     setTitle("");
     setTask("");
-    setUser("");
   };
 
   return (
