@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createTodo } from "../actions/createTodo";
 import type { Todo } from "../interfaces/todo.interface";
-import type { TodoAPIResponse } from "../actions/getTodos";
+import type { TodoAPIResponse } from "../actions/getTodosByUser";
 
 interface CreateTodoProps {
   setIsCreating: (isCreating: boolean) => void;
@@ -58,8 +58,7 @@ export function CreateTodo({
         />
       </label>
       <label>
-        User:{" "}
-        <span> {localStorage.getItem('username')} </span>
+        User: <span> {localStorage.getItem("username")} </span>
       </label>
       <button
         className="bg-red-300 border border-red-800 text-red-800 w-1/3 sm:w-1/4 lg:w-1/5 rounded"

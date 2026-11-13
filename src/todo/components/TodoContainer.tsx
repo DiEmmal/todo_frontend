@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { getTodos } from "../actions/getTodos";
+import { getTodos } from "../actions/getTodosByUser";
 import type { Todo } from "../interfaces/todo.interface";
 import { CreateTodo } from "./CreateTodo";
 import { TodoComponent } from "./Todo";
+
+const user = localStorage.getItem("username") || undefined;
 
 export function TodoContainer() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -14,14 +16,13 @@ export function TodoContainer() {
 
   const handleFetchTodos = () => {
 
-    getTodos(page).then((data) => {
+    getTodos(page, undefined, user).then((data) => {
       setTodos(data.todos);
       setTotalPages(data.pagination.totalPages);
-      setLimit(data.pagination.limit)
+      setLimit(data.pagination.limit);
       setTotalTodos(data.pagination.total);
     });
-
-  }
+  };
 
   useEffect(() => {
     handleFetchTodos();
@@ -50,7 +51,7 @@ export function TodoContainer() {
   };
 
   const handleCreateNewTodo = () => {
-    if(!localStorage.getItem('username')) {
+    if (!localStorage.getItem("username")) {
       alert("Please login first to create a new todo.");
       return;
     }
@@ -70,7 +71,7 @@ export function TodoContainer() {
       {isCreating && (
         <CreateTodo
           setIsCreating={setIsCreating}
-          getTodos={() => getTodos(page)}
+          getTodos={() => getTodos(page, undefined, user)}
           setTodos={setTodos}
         />
       )}
@@ -87,7 +88,8 @@ export function TodoContainer() {
               task: "Be the first in write a TODO",
               user: "System",
               completed: false,
-              createdAt: new Date(), hasBeenEdited: false,
+              createdAt: new Date(),
+              hasBeenEdited: false,
             }}
           />
         )}

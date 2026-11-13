@@ -16,12 +16,13 @@ interface Pagination {
     totalPages: number;
 }
 
-export const getTodos = async (page: number, limit?: number): Promise<TodoAPIResponse> => {
+export const getTodos = async (page: number, limit?: number, user?: string): Promise<TodoAPIResponse> => {
 
-    const response = await apiUrl.get<TodoAPIResponse>("/api/todos", {
+    const response = await apiUrl.get<TodoAPIResponse>("/api/todos/user", {
         params: {
             page: page,
             limit: limit ?? 10,
+            user: user
         }
     });
 
